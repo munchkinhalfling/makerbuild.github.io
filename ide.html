@@ -198,7 +198,7 @@
         }
         function reloadTree() {
             $("#fileTree").html("");
-            $("#projName").html((JSON.parse(curProj["project.json"]).name));
+            $("#projName").html((JSON.parse(((curProj && 'project.json' in curProj)? curProj['project.json'] : '{"name": "<No Project>"}')).name));
             $("title").html("MakerBuild IDE - " + (JSON.parse(((curProj && 'project.json' in curProj)? curProj['project.json'] : '{"name": "<No Project>"}')).name));
             for(let file in curProj) {
                 $('#fileTree').append(`<li onclick='openFile(event)'>${file}<\/li>`);
