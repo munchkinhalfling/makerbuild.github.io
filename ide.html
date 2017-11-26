@@ -56,7 +56,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">Web Preview</h5>
+                    <h5 class="modal-title" id="previewModalTitle">Web Preview</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -194,12 +194,13 @@
             })]);
             var blobURL = URL.createObjectURL(previewBlob);
             $("#previewIframe").attr("src", blobURL);
+            $("#previewModalTitle").text(document.querySelector("#previewIframe").contentDocument.title);
             $("#previewModal").modal("show");
         }
         function reloadTree() {
             $("#fileTree").html("");
-            $("#projName").html((JSON.parse(curProj["project.json"]).name));
-            $("title").html("MakerBuild IDE - " + (JSON.parse(curProj["project.json"]).name));
+            $("#projName").html((JSON.parse(((curProj && 'project.json' in curProj)? curProj['project.json'] : '{"name": "<No Project>"}')).name));
+            $("title").html("MakerBuild IDE - " + (JSON.parse(((curProj && 'project.json' in curProj)? curProj['project.json'] : '{"name": "<No Project>"}')).name));
             for(let file in curProj) {
                 $('#fileTree').append(`<li onclick='openFile(event)'>${file}<\/li>`);
             }
