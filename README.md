@@ -1,8 +1,5 @@
-# MakerBuild-IDE
-An IDE for web programming
-----------------------------------------
 ## Getting Started
-To launch MakerBuild, open the [MakerBuild Launcher](munchkinhalfling.github.io/MakerBuild-IDE).
+To launch MakerBuild, <button class="btn btn-primary" onclick="openIde()">Click this button</button>.
 Please disable your popup blocker, because the MakerBuild IDE is a popup.
 To make a new project, hit the 'New Project' button.
 It will create index.html, app.js, and project.json files in the project.
