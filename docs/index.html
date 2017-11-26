@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>MakerBuild.IO</title>
+    <style>
+        pre#main {
+            word-wrap: break-word;
+            overflow-x: auto;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-dark bg-primary sticky-top justify-content-center">
+        <span class="navbar-brand" style="font-family: 'Comfortaa', sans-serif;">
+            MakerBuild IDE
+            <br/>
+            <small style="font-style: oblique; font-size: x-small">An IDE for web programming</small>
+        </span>
+        
+    </div>
+    <div class="container" id="main">
+    </div>
+    <script>
+        var openIde = () => window.open("ide.html", "_blank", "location=no");
+        (async () => {
+            document.querySelector("#main").innerHTML = (await axios.get('readme.html')).data;
+        })();
+    </script>
+</body>
+</html>
