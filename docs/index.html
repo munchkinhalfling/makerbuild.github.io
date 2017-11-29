@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/babel">
+    const getMessage = () => "Hello World";
+    document.getElementById('output').innerHTML = getMessage();
+    </script>
+        
     <title>MakerBuild.IO</title>
     <style>
         pre#main {
@@ -16,13 +21,13 @@
     </style>
 </head>
 <body>
-    <div class="navbar navbar-dark bg-primary sticky-top justify-content-center">
-        <span class="navbar-brand" style="font-family: 'Comfortaa', sans-serif;">
+    <div class="navbar navbar-dark bg-primary sticky-top align-items-center flex-collumn">
+        <span class="navbar-brand align-self-center" style="font-family: 'Comfortaa', sans-serif;">
             MakerBuild IDE
             <br/>
             <small style="font-style: oblique; font-size: x-small">An IDE for web programming</small>
         </span>
-        
+        <a class="align-self-end text-white" href="https://github.com/munchkinhalfling/makerbuild.github.io">View on GitHub</a>
     </div>
     <div class="container" id="main">
     </div>

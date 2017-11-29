@@ -50,6 +50,8 @@
         width: 99%;
     }
 </style>
+<!-- Load Babel -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 </head>
 <body>
     <div class="modal fade" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -189,9 +191,9 @@
         function preview() {
             scriptBlobs = {};
             previewBlob = new Blob([curProj["index.html"].replace(/<script src=(?:'|")\.\/(.*?)(?:'|")><\/script>/g, (all, source) => {
-                scriptBlobs[source] = new Blob([parseScript(curProj[source])]);
+                scriptBlobs[source] = new Blob([Babel.transform(parseScript(curProj[source]), {presets: ['es2015']}).code], {type: 'text/javascript'});
                 return `<script src="${URL.createObjectURL(scriptBlobs[source])}"><\/script>`;
-            })]);
+            })], {type: 'text/html'});
             var blobURL = URL.createObjectURL(previewBlob);
             $("#previewIframe").attr("src", blobURL);
             $("#previewModalTitle").text(document.querySelector("#previewIframe").contentDocument.title);
@@ -206,7 +208,7 @@
             }
         }
         function parseScript(script) {
-            return script.replace(/import (.*?) from "\.\/(.*?)";/g, (all, things, source) => `var ${things} = (() => {${parseScript(curProj[source])}})();`).replace(/export default/, 'return');
+            return "var __namedExports = {}; var __default = null;" + script.replace(/import {(.*?)} from "\.\/(.*?)";/g, (all, things, source) => `var {${things}} = ((() => {${parseScript(curProj[source])}})()).__namedExports;`).replace(/import (.*?) from "\.\/(.*?)";/g, (all, things, source) => `var ${things} = ((() => {${parseScript(curProj[source])}})()).__default;`).replace(/export default (.*?);/, '__default = $1;').replace(/export var (.*)/, 'var $1 = __namedExports["$1"]').replace(/export function (.*?)\(/, ' var $1 = __namedExports["$1"] = function (').replace(/export class (.*)/, 'var $1 = __namedExports["$1"] = class $1') + (script.indexOf("@module") > -1? '\nreturn { __namedExports, __default };\n' : '');
         }
         function deleteF() {
             var fName = prompt("File to Delete:");
