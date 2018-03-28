@@ -10,13 +10,20 @@
     const getMessage = () => "Hello World";
     document.getElementById('output').innerHTML = getMessage();
     </script>
-        
+
     <title>MakerBuild.IO</title>
     <style>
         pre#main {
             word-wrap: break-word;
             overflow-x: auto;
 
+        }
+        .right-div {
+          background-color: transparent;
+          color: white;
+        }
+        .right-div a {
+          color: white;
         }
     </style>
 </head>
@@ -27,8 +34,11 @@
             <br/>
             <small style="font-style: oblique; font-size: x-small">An IDE for web programming</small>
         </span>
-        <a class="align-self-end text-white" href="https://github.com/munchkinhalfling/makerbuild.github.io">View on GitHub</a>
-        <a class="float-right" href="https://github.com/munchkinhalfling/makerbuild.github.io">View on GitHub</a>
+        <div class="float-right right-div">
+          <a href="https://github.com/munchkinhalfling/makerbuild.github.io">View on GitHub</a>
+          <br/>
+          Download desktop shortcut: <a href="downloads/MakerBuild IDE.lnk.zip">Windows</a> <a href="downloads/makerbuild_ide.desktop.zip">Linux</a>
+        </div>
     </div>
     <div class="container" id="main">
     </div>
