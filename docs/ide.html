@@ -5,7 +5,7 @@
 <meta name="charset" value="utf-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 <style type="text/css" media="screen">
-    #editor { 
+    #editor {
         position: absolute;
         top: 22px;
         right: 0;
@@ -94,6 +94,8 @@
                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">View</a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#" onclick="preview()">Preview</a>
+                    <a class="dropdown-item" target="_blank" href="https://github.com/ajaxorg/ace/tree/master/lib/ace/theme">View Themes</a>
+                    <a class="dropdown-item" href="#" onclick="changeTheme()">Change Theme</a>
                 </div>
             </div>
         </li>
@@ -214,7 +216,11 @@
             var fName = prompt("File to Delete:");
             delete curProj[fName];
             reloadTree();
-        } 
+        }
+        function changeTheme() {
+          theme = prompt("Theme:");
+          editor.setTheme(`ace/theme/${theme}`)
+        }
         document.body.onkeypress = function(e) {
             if(e.ctrlKey || e.metaKey) { // it's a command
                 switch(e.key) {
