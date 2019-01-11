@@ -1,0 +1,34 @@
+{
+  "name": "makerbuild.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/munchkinhalfling/makerbuild.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/munchkinhalfling/makerbuild.github.io/issues"
+  },
+  "homepage": "https://github.com/munchkinhalfling/makerbuild.github.io#readme",
+  "devDependencies": {
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "@babel/core": "^7.2.2",
+    "ace": "^1.3.0",
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.5"
+  }
+}

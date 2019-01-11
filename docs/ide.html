@@ -1,58 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<title>MakerBuild IDE - &lt;No Project&gt;</title>
-<meta name="charset" value="utf-8">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-<style type="text/css" media="screen">
-    #editor {
-        position: absolute;
-        top: 22px;
-        right: 0;
-        bottom: 0;
-        left: 25%;
-    }
-    #sidebar {
-        width:25%;
-        height: 100%;
-        flex-direction: column;
-    }
-    #menubar {
-        height: 22px;
-        width: 100%;
-        border-bottom: 1px solid lightgrey;
-        list-style-type: none;
-        margin-bottom: 0;
-        padding-left: 2px;
-    }
-    #menubar li {
-        display: inline;
-        margin: 3px;
-        cursor: default;
-    }
-    #fileTree li {
-        cursor: pointer;
-    }
-    #menubar li:hover {
-        background-color: grey;
-    }
-    html, body {
-        height: 100%;
-        width: 100%;
-    }
-    iframe {
-        border: none;
-        width: 100%;
-        height: 100%;
-    }
-    div#previewModal .modal-dialog, div#previewModal .modal-dialog .modal-content, div#previewModal {
-        height: 90%;
-        width: 99%;
-    }
-</style>
-<!-- Load Babel -->
-<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <title>MakerBuild IDE - &lt;No Project&gt;</title>
+    <meta name="charset" value="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous">
+    <style type="text/css" media="screen">
+        #editor {
+            position: absolute;
+            top: 22px;
+            right: 0;
+            bottom: 0;
+            left: 25%;
+        }
+
+        #sidebar {
+            width: 25%;
+            height: 100%;
+            flex-direction: column;
+        }
+
+        #menubar {
+            height: 22px;
+            width: 100%;
+            border-bottom: 1px solid lightgrey;
+            list-style-type: none;
+            margin-bottom: 0;
+            padding-left: 2px;
+        }
+
+        #menubar li {
+            display: inline;
+            margin: 3px;
+            cursor: default;
+        }
+
+        #fileTree li {
+            cursor: pointer;
+        }
+
+        #menubar li:hover {
+            background-color: grey;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        iframe {
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        div#previewModal .modal-dialog,
+        div#previewModal .modal-dialog .modal-content,
+        div#previewModal {
+            height: 90%;
+            width: 99%;
+        }
+    </style>
+    <!-- Load Babel -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 </head>
+
 <body>
     <div class="modal fade" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -60,7 +74,7 @@
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="previewModalTitle">Web Preview</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -87,14 +101,15 @@
                     <a class="dropdown-item" href="#">Copy <small>Ctrl+C</small></a>
                     <a class="dropdown-item" href="#">Paste <small>Ctrl+V</small></a>
                     <a class="dropdown-item" href="#">Select All <small>Ctrl+A</small></a>
-            </div>
+                </div>
         </li>
         <li>
             <div class="btn-group">
                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">View</a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#" onclick="preview()">Preview</a>
-                    <a class="dropdown-item" target="_blank" href="https://github.com/ajaxorg/ace/tree/master/lib/ace/theme">View Themes</a>
+                    <a class="dropdown-item" target="_blank" href="https://github.com/ajaxorg/ace/tree/master/lib/ace/theme">View
+                        Themes</a>
                     <a class="dropdown-item" href="#" onclick="changeTheme()">Change Theme</a>
                 </div>
             </div>
@@ -108,133 +123,24 @@
             <button class="btn btn-primary btn-sm btn-block nav-link" id="nproj">+ New Project</button>
         </li>
         <li class='nav-item'>
-            <hr class="text-white"/>
+            <hr class="text-white" />
             <h5 style="font-family: 'Comfortaa', sans-serif;" class="nav-link" id="projName">&lt;No Project&gt;</h5>
-            <hr class="text-white"/>
+            <hr class="text-white" />
             <ul style="list-style-type: disc;" id="fileTree">
             </ul>
         </li>
-    </div>
-<div id="editor">// create a project to see code here.
-// create projects using the "New Project" button.
-// this project created by @munchkinhalfling using Ace &lt;ace.c9.io&gt;
-</div>
+        </div>
+        <div id="editor">// create a project to see code here. // create projects using the "New Project" button. // this
+            project created by @munchkinhalfling using Ace &lt;ace.c9.io&gt;
+        </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-    <script src="./ace/src/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script>
-        var editor = ace.edit("editor");
-        var theme = "chrome";
-        var defaultProj = {
-            "app.js": "// This is the main JavaScript file\n// Type code here."
-        };
-        var curProj = JSON.parse(localStorage['curProj'] || '{}');
-        var curFile;
-        var previewBlob;
-        var scriptBlobs = [];
-        $.get("template_index.html", (data, status, xhr) => {
-            defaultProj["index.html"] = data;
-        });
-        reloadTree();
-        editor.setTheme(`ace/theme/${theme}`);
-        editor.getSession().setMode("ace/mode/javascript");
-        // DOWN and DIRTY NOW //
-        $('#nproj').on('click', function(e) {
-            var projName = prompt("Project Name:", "Untitled Project");
-            $('#projName').text(projName);
-            curProj = defaultProj;
-            curProj["project.json"] = `{
-    "name": "${projName}",
-    "version": "1.0.0",
-    "createdWith": "MakerBuild IDE"
-}`;
-            reloadTree();
-        });
-        function openFile(e) {
-            editor.setValue(curProj[e.target.textContent]);
-            curFile = e.target.textContent;
-            switch(e.target.textContent.split('.')[1]) {
-                case 'js':
-                editor.getSession().setMode("ace/mode/javascript");
-                break;
-                case 'html':
-                editor.getSession().setMode("ace/mode/html");
-                break;
-                default:
-                break; // Ace usually auto-detects the file type //
-            }
-        }
-        function save() {
-            curProj[curFile] = editor.getValue();
-            localStorage['curProj'] = JSON.stringify(curProj);
-            alert("Saved!")
-        }
-        function newF() {
-            var fileName = prompt("File name:", "unnamed.js");
-            var fileContents;
-            switch(fileName.split(".")[1]) {
-                case "html":
-                $.get("template_generic.html", (data, status, xhr) => {
-                    fileContents = data;
-                });
-                break;
-                case "js":
-                fileContents = "// This is a new file.";
-                break;
-                default:
-                fileContents = "";
-                break;
-            }
-            curProj[fileName] = fileContents;
-            reloadTree();
-        }
-        function preview() {
-            scriptBlobs = {};
-            previewBlob = new Blob([curProj["index.html"].replace(/<script src=(?:'|")\.\/(.*?)(?:'|")><\/script>/g, (all, source) => {
-                scriptBlobs[source] = new Blob([Babel.transform(parseScript(curProj[source]), {presets: ['es2015']}).code], {type: 'text/javascript'});
-                return `<script src="${URL.createObjectURL(scriptBlobs[source])}"><\/script>`;
-            })], {type: 'text/html'});
-            var blobURL = URL.createObjectURL(previewBlob);
-            $("#previewIframe").attr("src", blobURL);
-            $("#previewModalTitle").text(document.querySelector("#previewIframe").contentDocument.title);
-            $("#previewModal").modal("show");
-        }
-        function reloadTree() {
-            $("#fileTree").html("");
-            $("#projName").html((JSON.parse(((curProj && 'project.json' in curProj)? curProj['project.json'] : '{"name": "<No Project>"}')).name));
-            $("title").html("MakerBuild IDE - " + (JSON.parse(((curProj && 'project.json' in curProj)? curProj['project.json'] : '{"name": "<No Project>"}')).name));
-            for(let file in curProj) {
-                $('#fileTree').append(`<li onclick='openFile(event)'>${file}<\/li>`);
-            }
-        }
-        function parseScript(script) {
-            return "var __namedExports = {}; var __default = null;" + script.replace(/import {(.*?)} from "\.\/(.*?)";/g, (all, things, source) => `var {${things}} = ((() => {${parseScript(curProj[source])}})()).__namedExports;`).replace(/import (.*?) from "\.\/(.*?)";/g, (all, things, source) => `var ${things} = ((() => {${parseScript(curProj[source])}})()).__default;`).replace(/export default (.*?);/, '__default = $1;').replace(/export var (.*)/, 'var $1 = __namedExports["$1"]').replace(/export function (.*?)\(/, ' var $1 = __namedExports["$1"] = function (').replace(/export class (.*)/, 'var $1 = __namedExports["$1"] = class $1') + (script.indexOf("@module") > -1? '\nreturn { __namedExports, __default };\n' : '');
-        }
-        function deleteF() {
-            var fName = prompt("File to Delete:");
-            delete curProj[fName];
-            reloadTree();
-        }
-        function changeTheme() {
-          theme = prompt("Theme:");
-          editor.setTheme(`ace/theme/${theme}`)
-        }
-        document.body.onkeypress = function(e) {
-            if(e.ctrlKey || e.metaKey) { // it's a command
-                switch(e.key) {
-                    case 's': // Ctrl+S - save
-                        save();
-                        e.preventDefault();
-                        break;
-                    case 'n': // Ctrl+N - new
-                        newF();
-                        e.preventDefault();
-                        break;
-                }
-            }
-        }
-    </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"></script>
+        <script src="./ace/src/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src='bundle.js'></script>
 </body>
+
 </html>
