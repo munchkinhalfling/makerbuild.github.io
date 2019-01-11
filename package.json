@@ -34,6 +34,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.5",
     "babel-standalone": "^6.26.0",
+    "https-proxy-agent": "^2.2.0",
     "webpack": "^4.28.4"
   }
 }
