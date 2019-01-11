@@ -63,8 +63,6 @@
             width: 99%;
         }
     </style>
-    <!-- Load Babel -->
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 </head>
 
 <body>
@@ -88,9 +86,9 @@
             <div class="btn-group">
                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">File</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#" onclick="newF()">New...</a>
-                    <a class="dropdown-item" href="#" onclick="save()">Save</a>
-                    <a class="dropdown-item" href="#" onclick="deleteF()">Delete...</a>
+                    <a class="dropdown-item" href="#" onclick="makerbuild.newF()">New...</a>
+                    <a class="dropdown-item" href="#" onclick="makerbuild.save()">Save</a>
+                    <a class="dropdown-item" href="#" onclick="makerbuild.deleteF()">Delete...</a>
                 </div>
             </div>
         </li>
@@ -107,10 +105,10 @@
             <div class="btn-group">
                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">View</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#" onclick="preview()">Preview</a>
+                    <a class="dropdown-item" href="#" onclick="makerbuild.preview()">Preview</a>
                     <a class="dropdown-item" target="_blank" href="https://github.com/ajaxorg/ace/tree/master/lib/ace/theme">View
                         Themes</a>
-                    <a class="dropdown-item" href="#" onclick="changeTheme()">Change Theme</a>
+                    <a class="dropdown-item" href="#" onclick="makerbuild.changeTheme()">Change Theme</a>
                 </div>
             </div>
         </li>
@@ -130,8 +128,9 @@
             </ul>
         </li>
         </div>
-        <div id="editor">// create a project to see code here. // create projects using the "New Project" button. // this
-            project created by @munchkinhalfling using Ace &lt;ace.c9.io&gt;
+        <div id="editor">// create a project to see code here.
+// create projects using the "New Project" button. 
+// this project created by @munchkinhalfling using Ace &lt;ace.c9.io&gt;
         </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
