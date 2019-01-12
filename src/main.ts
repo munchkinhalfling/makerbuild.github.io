@@ -2,6 +2,9 @@ import * as Babel from "babel-standalone";
 interface JQModal extends JQuery {
   modal(thing: string): void;
 }
+interface MBGlobal extends NodeJS.Global {
+  makerbuild: any;
+}
 var editor = ace.edit("editor");
 var theme = "chrome";
 var defaultProj = {
@@ -17,6 +20,7 @@ $.get("template_index.html", (data, status, xhr) => {
 reloadTree();
 editor.setTheme(`ace/theme/${theme}`);
 editor.getSession().setMode("ace/mode/javascript");
+editor.$blockScrolling = Infinity;
 // DOWN and DIRTY NOW //
 $("#nproj").on("click", function(e) {
   var projName = prompt("Project Name:", "Untitled Project");
@@ -76,9 +80,12 @@ export const preview = () => {
         (all, source) => {
           scriptBlobs[source] = new Blob(
             [
-              Babel.transform(parseScript(curProj[source]), {
-                presets: ["es2015"]
-              }).code
+              parseScript(
+                Babel.transform(curProj[source], {
+                  presets: ["es2015"]
+                }).code,
+                curProj
+              )
             ],
             { type: "text/javascript" }
           );
@@ -125,38 +132,29 @@ function reloadTree() {
     );
   }
 }
-function parseScript(script) {
-  return (
-    "var __namedExports = {}; var __default = null;" +
-    script
-      .replace(
-        /import {(.*?)} from "\.\/(.*?)";/g,
-        (all, things, source) =>
-          `var {${things}} = ((() => {${parseScript(
-            curProj[source]
-          )}})()).__namedExports;`
-      )
-      .replace(
-        /import (.*?) from "\.\/(.*?)";/g,
-        (all, things, source) =>
-          `var ${things} = ((() => {${parseScript(
-            curProj[source]
-          )}})()).__default;`
-      )
-      .replace(/export default (.*?);/, "__default = $1;")
-      .replace(/export var (.*)/, 'var $1 = __namedExports["$1"]')
-      .replace(
-        /export function (.*?)\(/,
-        ' var $1 = __namedExports["$1"] = function ('
-      )
-      .replace(
-        /export class (.*)/,
-        'var $1 = __namedExports["$1"] = class $1'
-      ) +
-    (script.indexOf("@module") > -1
-      ? "\nreturn { __namedExports, __default };\n"
-      : "")
-  );
+function parseScript(script: string, fs) {
+  return `
+(function() {
+var module = {exports: {}};
+var exports = new Proxy(module.exports, {})
+${script}
+return module;
+})()
+`.replace(/require\((?:'|")(.*?)(?:'|")\)/, (all, fname) => {
+    return fs.hasOwnProperty(fname)
+      ? parseScript(
+          Babel.transform(fs[fname], { presets: ["es2015"] }).code,
+          fs
+        ) + ".exports"
+      : fs.hasOwnProperty(name + ".js")
+      ? parseScript(
+          Babel.transform(fs[name + ".js"], { presets: ["es2015"] }),
+          fs
+        ) + ".exports"
+      : (() => {
+          throw new Error("No module " + fname + " in project.");
+        })();
+  });
 }
 export var deleteF = () => {
   var fName = prompt("File to Delete:");
@@ -182,4 +180,4 @@ document.body.onkeypress = function(e) {
     }
   }
 };
-global.makerbuild = module.exports;
+(<MBGlobal>global).makerbuild = module.exports;

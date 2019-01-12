@@ -1,28 +1,53 @@
 <h2>Getting Started</h2>
 
-<p>To launch MakerBuild, <button class="btn btn-primary" onclick="openIde()">Click this button</button>.
-Please disable your popup blocker, because the MakerBuild IDE is a popup.
-To make a new project, hit the &#39;New Project&#39; button.
-It will create index.html, app.js, and project.json files in the project.
-To save, hit Ctrl+S. To create a new file, hit Ctrl+N.
-To preview your page in a dialog, go to &quot;view&quot; &gt; &quot;Preview&quot;. This will launch a modal.</p>
+<p>
+  To launch MakerBuild,
+  <button class="btn btn-primary" onclick="openIde()">Click this button</button
+  >. Please disable your popup blocker, because the MakerBuild IDE is a popup.
+  To make a new project, hit the &#39;New Project&#39; button. It will create
+  index.html, app.js, and project.json files in the project. To save, hit
+  Ctrl+S. To create a new file, hit Ctrl+N. To preview your page in a dialog, go
+  to &quot;view&quot; &gt; &quot;Preview&quot;. This will launch a modal.
+</p>
 
-<h2>Coding Quirks</h2>
+<del>
+  <h2>Coding Quirks</h2>
 
-<p>Since I had to write the script-loading engine myself, there are a few quirks. I had to write it myself because the project is stored in a JSON object, not a directory.</p>
+  <p>
+    Since I had to write the script-loading engine myself, there are a few
+    quirks. I had to write it myself because the project is stored in a JSON
+    object, not a directory.
+  </p>
 
-<h3>The First Quirk</h3>
+  <h3>The First Quirk</h3>
 
-<p>First up is with the script tag. As with any method of importing scripts (in the IDE), you have to have a &quot;./&quot; in front of all local URLs.</p>
+  <p>
+    First up is with the script tag. As with any method of importing scripts (in
+    the IDE), you have to have a &quot;./&quot; in front of all local URLs.
+  </p>
 
-<h3>The Second Quirk</h3>
+  <h3>The Second Quirk</h3>
 
-<p>Second up is with export statements. You can only &quot;export default&quot;.</p>
+  <p>
+    Second up is with export statements. You can only &quot;export
+    default&quot;.
+  </p>
 
-<h3>The Third Quirk</h3>
+  <h3>The Third Quirk</h3>
 
-<p>Third up is with import statements. This relates to the the second querk. Since you can only use default exports, the <code>import {var1, var2} from &#39;./module.js&#39;</code> syntax imports properties of an object you &#39;export default&#39;.</p>
+  <p>
+    Third up is with import statements. This relates to the the second querk.
+    Since you can only use default exports, the
+    <code>import {var1, var2} from &#39;./module.js&#39;</code> syntax imports
+    properties of an object you &#39;export default&#39;.
+  </p>
 
-<h2>Browser Support</h2>
+  <h2>Browser Support</h2>
 
-<p>The app is tried, true, and tested in Firefox Developer Edition, Firefox Nightly for Android, and Chrome for Android. In desktop Chrome, everything except keyboard shortcuts works.</p>
+  <p>
+    The app is tried, true, and tested in Firefox Developer Edition, Firefox
+    Nightly for Android, and Chrome for Android. In desktop Chrome, everything
+    except keyboard shortcuts works.
+  </p>
+</del>
+<ins>No coding quirks any more!</ins>
