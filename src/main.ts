@@ -17,6 +17,9 @@ var scriptBlobs = [];
 $.get("template_index.html", (data, status, xhr) => {
   defaultProj["index.html"] = data;
 });
+$.get("makerbuild.js", (data, status, xhr) => {
+  defaultProj["makerbuild.js"] = data;
+});
 reloadTree();
 editor.setTheme(`ace/theme/${theme}`);
 editor.getSession().setMode("ace/mode/javascript");
@@ -72,32 +75,7 @@ export const newF = () => {
   reloadTree();
 };
 export const preview = () => {
-  scriptBlobs = [];
-  previewBlob = new Blob(
-    [
-      curProj["index.html"].replace(
-        /<script src=(?:'|")\.\/(.*?)(?:'|")><\/script>/g,
-        (all, source) => {
-          scriptBlobs[source] = new Blob(
-            [
-              parseScript(
-                Babel.transform(curProj[source], {
-                  presets: ["es2015"]
-                }).code,
-                curProj
-              )
-            ],
-            { type: "text/javascript" }
-          );
-          return `<script src="${URL.createObjectURL(
-            scriptBlobs[source]
-          )}"><\/script>`;
-        }
-      )
-    ],
-    { type: "text/html" }
-  );
-  var blobURL = URL.createObjectURL(previewBlob);
+  var blobURL = getBundle();
   $("#previewIframe").attr("src", blobURL);
   $("#previewModalTitle").text(
     (() => {
@@ -132,6 +110,11 @@ function reloadTree() {
     );
   }
 }
+export const projectUtils = {
+  getInProject(file: string): string {
+    return curProj[file];
+  }
+};
 function parseScript(script: string, fs) {
   return `
 (function() {
@@ -140,21 +123,42 @@ var exports = new Proxy(module.exports, {})
 ${script}
 return module;
 })()
-`.replace(/require\((?:'|")(.*?)(?:'|")\)/, (all, fname) => {
-    return fs.hasOwnProperty(fname)
-      ? parseScript(
-          Babel.transform(fs[fname], { presets: ["es2015"] }).code,
-          fs
-        ) + ".exports"
-      : fs.hasOwnProperty(name + ".js")
-      ? parseScript(
-          Babel.transform(fs[name + ".js"], { presets: ["es2015"] }),
-          fs
-        ) + ".exports"
-      : (() => {
-          throw new Error("No module " + fname + " in project.");
-        })();
-  });
+`
+    .replace(/require\((?:'|")(.*?)(?:'|")\)/g, (all, fname) => {
+      return fs.hasOwnProperty(fname)
+        ? parseScript(
+            Babel.transform(fs[fname], { presets: ["es2015"] }).code,
+            fs
+          ) + ".exports"
+        : fs.hasOwnProperty(name + ".js")
+        ? parseScript(
+            Babel.transform(fs[name + ".js"], { presets: ["es2015"] }),
+            fs
+          ) + ".exports"
+        : (() => {
+            throw new Error("No module " + fname + " in project.");
+          })();
+    })
+    .replace("$MAKERBUILD_PROJECT", "(" + JSON.stringify(curProj) + ")");
+}
+function getBundle() {
+  let bundleBlob = new Blob(
+    [
+      curProj["index.html"].replace(
+        /<script src=(?:'|")\.\/(.*?)(?:'|")><\/script>/g,
+        (all, source) => {
+          return `<script>${parseScript(
+            Babel.transform(curProj[source], {
+              presets: ["es2015"]
+            }).code,
+            curProj
+          )}<\/script>`;
+        }
+      )
+    ],
+    { type: "text/html" }
+  );
+  return URL.createObjectURL(bundleBlob);
 }
 export var deleteF = () => {
   var fName = prompt("File to Delete:");
@@ -180,4 +184,39 @@ document.body.onkeypress = function(e) {
     }
   }
 };
+export function downloadBundle() {
+  downloadFile(getBundle(), JSON.parse(curProj["project.json"]).name + ".html");
+}
+export function downloadFile(sUrl: string, fileName: string) {
+  //If in Chrome or Safari - download via virtual link click
+  if (downloadFile.isChrome || downloadFile.isSafari) {
+    //Creating new link node.
+    var link = document.createElement("a");
+    link.href = sUrl;
+
+    if (link.download !== undefined) {
+      //Set HTML5 download attribute. This will prevent file from opening if supported.
+      //var fileName = sUrl.substring(sUrl.lastIndexOf("/") + 1, sUrl.length);
+      link.download = fileName;
+    }
+
+    //Dispatching click event.
+    if (document.createEvent) {
+      var e = document.createEvent("MouseEvents");
+      e.initEvent("click", true, true);
+      link.dispatchEvent(e);
+      return true;
+    }
+  }
+
+  // Force file download (whether supported by server).
+  var query = "?download";
+
+  window.open(sUrl + query);
+}
+
+module.exports.downloadFile.isChrome =
+  navigator.userAgent.toLowerCase().indexOf("chrome") > -1;
+module.exports.downloadFile.isSafari =
+  navigator.userAgent.toLowerCase().indexOf("safari") > -1;
 (<MBGlobal>global).makerbuild = module.exports;
