@@ -1,4 +1,5 @@
 import * as Babel from "babel-standalone";
+import * as ts from "typescript";
 interface JQModal extends JQuery {
   modal(thing: string): void;
 }
@@ -126,15 +127,9 @@ return module;
 `
     .replace(/require\((?:'|")(.*?)(?:'|")\)/g, (all, fname) => {
       return fs.hasOwnProperty(fname)
-        ? parseScript(
-            Babel.transform(fs[fname], { presets: ["es2015"] }).code,
-            fs
-          ) + ".exports"
+        ? parseScript(compileScript(fs[fname], fname), fs) + ".exports"
         : fs.hasOwnProperty(name + ".js")
-        ? parseScript(
-            Babel.transform(fs[name + ".js"], { presets: ["es2015"] }),
-            fs
-          ) + ".exports"
+        ? parseScript(compileScript(fs[fname + ".js"], fname), fs) + ".exports"
         : (() => {
             throw new Error("No module " + fname + " in project.");
           })();
@@ -148,9 +143,7 @@ function getBundle() {
         /<script src=(?:'|")\.\/(.*?)(?:'|")><\/script>/g,
         (all, source) => {
           return `<script>${parseScript(
-            Babel.transform(curProj[source], {
-              presets: ["es2015"]
-            }).code,
+            compileScript(curProj[source], source),
             curProj
           )}<\/script>`;
         }
@@ -213,6 +206,21 @@ export function downloadFile(sUrl: string, fileName: string) {
   var query = "?download";
 
   window.open(sUrl + query);
+}
+
+function compileScript(code: string, name: string): string {
+  let parts = name.split(".");
+  let ext = parts[parts.length - 1];
+  let res: string = code;
+  switch (ext) {
+    case "js":
+      res = Babel.transform(code, { presets: ["es2015"] }).code;
+      break;
+    case "ts":
+      res = ts.transpile(code);
+      break;
+  }
+  return res;
 }
 
 module.exports.downloadFile.isChrome =
