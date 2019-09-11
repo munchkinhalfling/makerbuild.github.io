@@ -1,13 +1,13 @@
 var cacheName = 'makerbuild-ide';
 var filesToCache = [
-  '/',
-  '/index.html',
-  '/makerbuild.js',
-  '/ide.html',
-  '/template_generic.html',
-  '/template_index.html',
-  '/bundle.js',
-  '/favicon.ico'
+  './',
+  './index.html',
+  './makerbuild.js',
+  './ide.html',
+  './template_generic.html',
+  './template_index.html',
+  './bundle.js',
+  './favicon.ico'
 ];
 self.addEventListener('install', function(e) {
   console.log('[ServiceWorker] Install');
