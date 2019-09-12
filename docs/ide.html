@@ -1,157 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>
     <title>MakerBuild IDE - &lt;No Project&gt;</title>
     <meta name="charset" value="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="icon" href="favicon.ico">
     <link rel="manifest" href="./manifest.json">
     <style type="text/css" media="screen">
-        #editor {
-            position: absolute;
-            top: 22px;
-            right: 0;
-            bottom: 0;
-            left: 25%;
-        }
+      #editor {
+        position: absolute;
+        top: 22px;
+        right: 0;
+        bottom: 0;
+        left: 25%;
+      }
 
-        #sidebar {
-            width: 25%;
-            height: 100%;
-            flex-direction: column;
-        }
+      #sidebar {
+        width: 25%;
+        height: 100%;
+        flex-direction: column;
+      }
 
-        #menubar {
-            height: 22px;
-            width: 100%;
-            border-bottom: 1px solid lightgrey;
-            list-style-type: none;
-            margin-bottom: 0;
-            padding-left: 2px;
-            background-color: #292b2c;
-        }
+      #menubar {
+        height: 22px;
+        width: 100%;
+        border-bottom: 1px solid lightgrey;
+        list-style-type: none;
+        margin-bottom: 0;
+        padding-left: 2px;
+        background-color: #292b2c;
+      }
 
-        #menubar li {
-            display: inline;
-            margin: 3px;
-            cursor: default;
-        }
+      #menubar li {
+        display: inline;
+        margin: 3px;
+        cursor: default;
+      }
 
-        #fileTree li {
-            cursor: pointer;
-        }
+      #fileTree li {
+        cursor: pointer;
+      }
 
-        #menubar li:hover {
-            background-color: grey;
-        }
+      #menubar li:hover {
+        background-color: grey;
+      }
 
-        html,
-        body {
-            height: 100%;
-            width: 100%;
-        }
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+      }
 
-        iframe {
-            border: none;
-            width: 100%;
-            height: 100%;
-        }
+      iframe {
+        border: none;
+        width: 100%;
+        height: 100%;
+      }
 
-        div#previewModal .modal-dialog,
-        div#previewModal .modal-dialog .modal-content,
-        div#previewModal {
-            height: 90%;
-            width: 99%;
-        }
+      div#previewModal .modal-dialog,
+      div#previewModal .modal-dialog .modal-content,
+      div#previewModal {
+        height: 90%;
+        width: 99%;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="modal fade" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="previewModalTitle">Web Preview</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <iframe id="previewIframe"></iframe>
-                </div>
-            </div>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="previewModalTitle">Web Preview</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <iframe id="previewIframe"></iframe>
+          </div>
         </div>
+      </div>
     </div>
     <ul id="menubar" class="text-white">
-        <li>
-            <div class="btn-group">
-                <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">File</a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#" onclick="makerbuild.newF()">New...</a>
-                    <a class="dropdown-item" href="#" onclick="makerbuild.save()">Save</a>
-                    <a class="dropdown-item" href="#" onclick="makerbuild.deleteF()">Delete...</a>
-                    <a class="dropdown-item" href="#" onclick="makerbuild.downloadBundle()">Download All-In-One HTML</a>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="btn-group">
-                <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit</a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Copy <small>Ctrl+C</small></a>
-                    <a class="dropdown-item" href="#">Paste <small>Ctrl+V</small></a>
-                    <a class="dropdown-item" href="#">Select All <small>Ctrl+A</small></a>
-                </div>
-        </li>
-        <li>
-            <div class="btn-group">
-                <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">View</a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#" onclick="makerbuild.preview()">Preview</a>
-                    <a class="dropdown-item" target="_blank" href="https://github.com/ajaxorg/ace/tree/master/lib/ace/theme">View
-                        Themes</a>
-                    <a class="dropdown-item" href="#" onclick="makerbuild.changeTheme()">Change Theme</a>
-                </div>
-            </div>
-        </li>
+      <li>
+        <div class="btn-group">
+          <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">File</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" onclick="makerbuild.newF()">New...</a>
+            <a class="dropdown-item" href="#" onclick="makerbuild.save()">Save</a>
+            <a class="dropdown-item" href="#" onclick="makerbuild.deleteF()">Delete...</a>
+            <a class="dropdown-item" href="#" onclick="makerbuild.downloadBundle()">Download All-In-One HTML</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="btn-group">
+          <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Copy
+              <small>Ctrl+C</small>
+            </a>
+            <a class="dropdown-item" href="#">Paste
+              <small>Ctrl+V</small>
+            </a>
+            <a class="dropdown-item" href="#">Select All
+              <small>Ctrl+A</small>
+            </a>
+          </div>
+      </li>
+      <li>
+        <div class="btn-group">
+          <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">View</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" onclick="makerbuild.preview()">Preview</a>
+            <a class="dropdown-item" target="_blank" href="https://github.com/ajaxorg/ace/tree/master/lib/ace/theme">View Themes
+            </a>
+            <a class="dropdown-item" href="#" onclick="makerbuild.changeTheme()">Change Theme</a>
+          </div>
+        </div>
+      </li>
     </ul>
     <ul id="sidebar" class="nav bg-dark text-light">
-        <li class="nav-item">
-            <img src="logo.png" width="200" class="nav-link">
-        </li>
-        <li class="nav-item">
-            <button class="btn btn-primary btn-sm btn-block nav-link" id="nproj">+ New Project</button>
-        </li>
-        <li class='nav-item'>
-            <hr class="text-white" />
-            <h5 style="font-family: 'Comfortaa', sans-serif;" class="nav-link" id="projName">&lt;No Project&gt;</h5>
-            <hr class="text-white" />
-            <ul style="list-style-type: disc;" id="fileTree">
-            </ul>
-        </li>
-        </div>
-        <div id="editor">// create a project to see code here.
-// create projects using the "New Project" button. 
-// this project created by @munchkinhalfling using Ace &lt;ace.c9.io&gt;
-        </div>
+      <li class="nav-item">
+        <img src="logo.png" width="200" class="nav-link">
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-primary btn-sm btn-block nav-link" id="nproj">+ New Project</button>
+      </li>
+      <li class='nav-item'>
+        <hr class="text-white" />
+        <h5 style="font-family: 'Comfortaa', sans-serif;" class="nav-link" id="projName">&lt;No Project&gt;</h5>
+        <hr class="text-white" />
+        <ul style="list-style-type: disc;" id="fileTree">
+        </ul>
+      </li>
+      </div>
+      <div id="editor">// create a project to see code here. // create projects using the "New Project" button. // this project created by @munchkinhalfling using Ace &lt;ace.c9.io&gt;
+      </div>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-            crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-            crossorigin="anonymous"></script>
-        <script src="./ace/src/ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src='bundle.js'></script>
-        <script>
-            if('serviceWorker' in navigator) {
-              navigator.serviceWorker.register('./sw.js')
-                .then(function() {
-                      console.log('Service Worker Registered');
-                });
-            }
-          </script>
-</body>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+      <script src="./ace/src/ace.js" type="text/javascript" charset="utf-8"></script>
+      <script src='bundle.js'></script>
+      <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('./sw.js')
+            .then(function() {
+              console.log('Service Worker Registered');
+            });
+        }
+      </script>
+  </body>
 
 </html>
