@@ -7,7 +7,8 @@ var filesToCache = [
   './template_generic.html',
   './template_index.html',
   './bundle.js',
-  './favicon.ico'
+  './favicon.ico',
+  './readme.html'
 ];
 self.addEventListener('install', function(e) {
   console.log('[ServiceWorker] Install');
