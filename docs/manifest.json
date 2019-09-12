@@ -4,7 +4,11 @@
     "icons": [{
       "src": "favicon.ico",
       "sizes": "32x32",
-      "type": "image/icon"
+      "type": "image/png"
+    }, {
+        "src": "favicon-144x144.ico",
+        "sizes": "144x144",
+        "type": "image/png"
     }],
     "start_url": "./ide.html",
     "gcm_sender_id": "103953800507",
