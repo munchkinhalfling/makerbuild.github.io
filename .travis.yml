@@ -10,3 +10,5 @@ before_script:
 script:
     - webpack
 language: node_js
+node_js:
+    - 10.16.3
