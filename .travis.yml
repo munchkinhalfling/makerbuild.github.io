@@ -9,3 +9,4 @@ before_script:
     - npm i -g webpack
 script:
     - webpack
+language: node_js
