@@ -5,10 +5,11 @@ deploy:
   on:
     branch: gh-pages
   local_dir: docs
+
 before_script:
-    - npm i -g webpack
+    - npm install
 script:
-    - webpack
+    - npm run build
 language: node_js
 node_js:
     - 10.16.3
