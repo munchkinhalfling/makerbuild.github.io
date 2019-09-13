@@ -1,0 +1,11 @@
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: 765f348dafebf576e7d68721e34cd8b0f6c01f7d
+  on:
+    branch: gh-pages
+  local_dir: docs
+before_script:
+    - npm i -g webpack
+script:
+    - webpack
