@@ -1,3 +1,4 @@
+declare let ace: any;
 import * as Babel from "babel-standalone";
 import * as ts from "typescript";
 interface JQModal extends JQuery {
