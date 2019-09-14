@@ -181,7 +181,7 @@ document.body.onkeypress = function(e) {
 export function downloadBundle() {
   downloadFile(getBundle(), JSON.parse(curProj["project.json"]).name + ".html");
 }
-export function downloadFile(sUrl: string, fileName: string) {
+function downloadFile(sUrl: string, fileName: string) {
   //If in Chrome or Safari - download via virtual link click
   if (downloadFile.isChrome || downloadFile.isSafari) {
     //Creating new link node.
@@ -208,6 +208,11 @@ export function downloadFile(sUrl: string, fileName: string) {
 
   window.open(sUrl + query);
 }
+namespace downloadFile {
+    export var isChrome: boolean = navigator.userAgent.toLowerCase().indexOf("chrome") > -1;
+    export var isSafari: boolean = navigator.userAgent.toLowerCase().indexOf("safari") > -1;
+}
+export {downloadFile};
 
 function compileScript(code: string, name: string): string {
   let parts = name.split(".");
@@ -223,9 +228,4 @@ function compileScript(code: string, name: string): string {
   }
   return res;
 }
-
-module.exports.downloadFile.isChrome =
-  navigator.userAgent.toLowerCase().indexOf("chrome") > -1;
-module.exports.downloadFile.isSafari =
-  navigator.userAgent.toLowerCase().indexOf("safari") > -1;
 (<MBGlobal>global).makerbuild = module.exports;
