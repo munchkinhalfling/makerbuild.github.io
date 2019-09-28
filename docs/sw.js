@@ -8,7 +8,11 @@ var filesToCache = [
   './template_index.html',
   './bundle.js',
   './favicon.ico',
-  './readme.html'
+  './readme.html',
+  './logo.png',
+  './ace/src/ace.js',
+  'https://unpkg.com/axios/dist/axios.min.js',
+  'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css'
 ];
 self.addEventListener('install', function(e) {
   console.log('[ServiceWorker] Install');
