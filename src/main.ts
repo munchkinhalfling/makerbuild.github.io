@@ -154,8 +154,8 @@ function getBundle() {
   );
   return URL.createObjectURL(bundleBlob);
 }
-export var deleteF = () => {
-  var fName = prompt("File to Delete:");
+export var deleteF = async () => {
+  var fName = await prompt("File to Delete:");
   delete curProj[fName];
   reloadTree();
 };
