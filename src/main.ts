@@ -27,8 +27,8 @@ editor.setTheme(`ace/theme/${theme}`);
 editor.getSession().setMode("ace/mode/javascript");
 editor.$blockScrolling = Infinity;
 // DOWN and DIRTY NOW //
-$("#nproj").on("click", function(e) {
-  var projName = prompt("Project Name:", "Untitled Project");
+$("#nproj").on("click", async function(e) {
+  var projName = await prompt("Project Name:", "Untitled Project");
   $("#projName").text(projName);
   curProj = defaultProj;
   curProj["project.json"] = `{
@@ -57,8 +57,8 @@ export const save = () => {
   localStorage["curProj"] = JSON.stringify(curProj);
   alert("Saved!");
 };
-export const newF = () => {
-  var fileName = prompt("File name:", "unnamed.js");
+export const newF = async () => {
+  var fileName = await prompt("File name:", "unnamed.js");
   var fileContents;
   switch (fileName.split(".")[1]) {
     case "html":
@@ -159,8 +159,8 @@ export var deleteF = () => {
   delete curProj[fName];
   reloadTree();
 };
-export var changeTheme = () => {
-  theme = prompt("Theme:");
+export var changeTheme = async () => {
+  theme = await prompt("Theme:");
   editor.setTheme(`ace/theme/${theme}`);
 };
 document.body.onkeypress = function(e) {

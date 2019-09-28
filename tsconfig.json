@@ -1,3 +1,6 @@
 {
-  "files": ["src/main.ts"]
+  "files": ["src/main.ts"],
+  "compilerOptions": {
+    "lib": ["es2015", "dom"]
+  }
 }
