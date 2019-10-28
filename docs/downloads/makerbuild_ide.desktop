@@ -2,7 +2,7 @@
 Version=1.0
 Type=Application
 Terminal=false
-Exec=firefox -new-window https://munchkinhalfling.github.io/makerbuild.github.io/ide.html
+Exec=google-chrome --app=https://munchkinhalfling.github.io/makerbuild/ide.html
 Name=MakerBuild IDE
 Comment=An IDE for web programming
-Icon=icon path here
+Icon=google-chrome
