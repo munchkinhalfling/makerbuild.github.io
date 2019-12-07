@@ -1,6 +1,7 @@
 declare let ace: any;
 import * as Babel from "babel-standalone";
 import * as ts from "typescript";
+import './prompt.js';
 interface JQModal extends JQuery {
   modal(thing: string): void;
 }
@@ -168,12 +169,12 @@ document.body.onkeypress = function(e) {
     // it's a command
     switch (e.key) {
       case "s": // Ctrl+S - save
-        save();
         e.preventDefault();
+        save();
         break;
       case "n": // Ctrl+N - new
-        newF();
         e.preventDefault();
+        newF();
         break;
     }
   }
