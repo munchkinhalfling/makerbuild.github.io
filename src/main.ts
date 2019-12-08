@@ -1,13 +1,11 @@
 declare let ace: any;
+declare function prompt(msg: string, val?: string): Promise<string>;
+declare let __webpack_exports__: any;
 import * as Babel from "babel-standalone";
 import * as ts from "typescript";
 import './prompt.js';
-interface JQModal extends JQuery {
-  modal(thing: string): void;
-}
-interface MBGlobal extends NodeJS.Global {
-  makerbuild: any;
-}
+import {MBGlobal, NPMPackageList, JQModal, getSync} from "./util.ts";
+
 var editor = ace.edit("editor");
 var theme = "chrome";
 var defaultProj = {
@@ -17,6 +15,7 @@ var curProj = JSON.parse(localStorage["curProj"] || "{}");
 var curFile;
 var previewBlob;
 var scriptBlobs = [];
+var npmPackages = new NPMPackageList();
 $.get("template_index.html", (data, status, xhr) => {
   defaultProj["index.html"] = data;
 });
@@ -35,8 +34,10 @@ $("#nproj").on("click", async function(e) {
   curProj["project.json"] = `{
     "name": "${projName}",
     "version": "1.0.0",
-    "createdWith": "MakerBuild IDE"
+    "createdWith": "MakerBuild IDE",
+    "npm-packages": ${JSON.stringify(Array.from(new NPMPackageList()))}
 }`;
+  npmPackages = NPMPackageList.fromResolverIterable(JSON.parse(curProj['project.json'])['npm-packages']);
   reloadTree();
 });
 export const openFile = e => {
@@ -132,9 +133,7 @@ return module;
         ? parseScript(compileScript(fs[fname], fname), fs) + ".exports"
         : fs.hasOwnProperty(name + ".js")
         ? parseScript(compileScript(fs[fname + ".js"], fname), fs) + ".exports"
-        : (() => {
-            throw new Error("No module " + fname + " in project.");
-          })();
+        : parseScript(compileScript(getSync(NPMPackageList.resolve(fname, 'jsdelivr').resolved).text(), fname), fs) + ".exports"
     })
     .replace("$MAKERBUILD_PROJECT", "(" + JSON.stringify(curProj) + ")");
 }
@@ -166,14 +165,13 @@ export var changeTheme = async () => {
 };
 document.body.onkeypress = function(e) {
   if (e.ctrlKey || e.metaKey) {
+    e.preventDefault();
     // it's a command
     switch (e.key) {
       case "s": // Ctrl+S - save
-        e.preventDefault();
         save();
         break;
       case "n": // Ctrl+N - new
-        e.preventDefault();
         newF();
         break;
     }
@@ -221,12 +219,21 @@ function compileScript(code: string, name: string): string {
   let res: string = code;
   switch (ext) {
     case "js":
-      res = Babel.transform(code, { presets: ["es2015"] }).code;
+      res = Babel.transform(code, { presets: ["es2015"]}).code;
       break;
     case "ts":
-      res = ts.transpile(code);
+    case "tsx":
+      res = ts.transpile(code, {jsx: "react"}, name);
       break;
   }
   return res;
 }
-(<MBGlobal>global).makerbuild = module.exports;
+export async function addPackage() {
+  let pkg = await prompt('Package Name:');
+  npmPackages.install(pkg);
+}
+export async function removePackage() {
+  let pkg = await prompt('Package Name:');
+  npmPackages.uninstall(pkg);
+}
+(global as MBGlobal).makerbuild = __webpack_exports__;

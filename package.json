@@ -9,7 +9,8 @@
   },
   "scripts": {
     "build": "./node_modules/webpack/bin/webpack.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev-server": "webpack-dev-server --content-base docs/"
   },
   "repository": {
     "type": "git",
@@ -22,9 +23,10 @@
   },
   "homepage": "https://github.com/munchkinhalfling/makerbuild.github.io#readme",
   "devDependencies": {
-    "ts-loader": "^5.3.3",
-    "typescript": "^3.2.2",
-    "webpack-cli": "^3.2.1"
+    "ts-loader": "^5.4.5",
+    "typescript": "^3.7.3",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
     "@babel/core": "^7.2.2",
@@ -38,7 +40,7 @@
     "babel-loader": "^8.0.5",
     "babel-standalone": "^6.26.0",
     "cross-env": "^6.0.0",
-    "https-proxy-agent": "^2.2.0",
+    "https-proxy-agent": "^2.2.4",
     "template-element": "^2.4.1",
     "webpack": "^4.28.4"
   }
